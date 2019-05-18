@@ -12,8 +12,8 @@ const db = require('../../dataBase');
  * @returns filtered - array of users which names includes name from query
  */
 module.exports = (req, res) => {
-    const {name} = req.query;
-    if (!name) return res.json(db);
-    const filtered = db.filter(user => user.name.includes(name));
-    res.json(filtered);
+    // const {name} = req.query;
+    // if (!name) return res.json(db);
+    // const filtered = db.filter(user => user.name.includes(name));
+    res.json("filtered");
 };
