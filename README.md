@@ -2,6 +2,7 @@ To create database run code in console
 ```bash
 create schema if not exists social;
 
+use social;
 
 create table if not exists sex
 (
