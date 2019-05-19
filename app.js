@@ -18,8 +18,10 @@ app.get('/', async (req, res) => {
     res.sendFile(indexPath)
 });
 const userRouter = require('./routes/userRouter');
+const authRouter = require('./routes/authRouter');
 
 app.use('/user', userRouter);
+app.use('/auth', authRouter);
 
 app.use('*', (req, res) => {
     res.status(404).json('Oops')
