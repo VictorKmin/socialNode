@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
         const token = tokenizer({id, name, sex_id});
         res.json({
             success: true,
-            accessToken: token
+            msg: token
         })
     } catch (e) {
         console.log(e);

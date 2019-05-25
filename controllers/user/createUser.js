@@ -20,9 +20,15 @@ module.exports = async (req, res) => {
             sex_id: sex
         });
 
-        res.json(insertedUser)
+        res.json({
+            success: true,
+            msg: insertedUser
+        })
     } catch (e) {
         console.log(e);
-        res.status(400).json(e.message)
+        res.status(400).json({
+            success: false,
+            msg: e.message
+        })
     }
 };

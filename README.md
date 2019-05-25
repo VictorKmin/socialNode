@@ -27,6 +27,22 @@ create table if not exists user
             on update cascade on delete set null
 );
 
+create table if not exists friend
+(
+    id        int auto_increment
+        primary key,
+    user_id   int not null,
+    friend_id int not null,
+    constraint friend_user_id_fk
+        foreign key (friend_id) references social.user (id)
+            on update cascade on delete cascade,
+    constraint friend_user_id_fk_2
+        foreign key (user_id) references social.user (id)
+            on update cascade on delete cascade
+);
+
+
+
 INSERT INTO sex(label) VALUE ('Male');
 INSERT INTO sex(label) VALUE ('Female');
 INSERT INTO sex(label) VALUE ('Unknown');
@@ -39,4 +55,15 @@ INSERT INTO user(name, surname, email, password, sex_id) VALUE ('Donguan', 'Ispa
 INSERT INTO user(name, surname, email, password, sex_id) VALUE ('Little', 'Jimmy', 'bigboy@mail.ru', '1', 3);
 INSERT INTO user(name, surname, email, password, sex_id) VALUE ('Tema', 'Kitav', 'artemka@mail.ru', '1', 1);
 
+INSERT INTO friend(user_id, friend_id) VALUE (1, 4);
+INSERT INTO friend(user_id, friend_id) VALUE (1, 2);
+INSERT INTO friend(user_id, friend_id) VALUE (1, 6);
+INSERT INTO friend(user_id, friend_id) VALUE (3, 6);
+INSERT INTO friend(user_id, friend_id) VALUE (3, 2);
+INSERT INTO friend(user_id, friend_id) VALUE (3, 1);
+INSERT INTO friend(user_id, friend_id) VALUE (4, 2);
+INSERT INTO friend(user_id, friend_id) VALUE (4, 5);
+INSERT INTO friend(user_id, friend_id) VALUE (4, 3);
+INSERT INTO friend(user_id, friend_id) VALUE (5, 1);
+INSERT INTO friend(user_id, friend_id) VALUE (5, 2);
 ```

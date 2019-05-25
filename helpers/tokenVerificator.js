@@ -3,6 +3,7 @@ let {secret} = require('../constants/secret');
 
 module.exports = token => {
 
+    if (!token) throw new Error('No token');
     let user = null;
 
     jwt.verify(token, secret, (err, decode) => {

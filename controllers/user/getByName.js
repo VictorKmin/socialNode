@@ -21,8 +21,6 @@ module.exports = async (req, res) => {
 
         const token = req.get('Authorization');
 
-        if (!token) throw new Error('No token');
-
         const {id, name: userName} = tokenVerificator(token);
 
         const isPresent = await UserModel.findOne({
