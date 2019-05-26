@@ -21,6 +21,7 @@
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^1.6.5",
+    "nodemailer": "^6.2.1",
     "sequelize": "latest"
   }
 }

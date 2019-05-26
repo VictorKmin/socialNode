@@ -1,15 +1,31 @@
 const jwt = require('jsonwebtoken');
-let {secret} = require('../constants/secret');
+let {secret, passSecret} = require('../constants/secret');
 
-module.exports = token => {
+module.exports = {
 
-    if (!token) throw new Error('No token');
-    let user = null;
+    auth: token => {
 
-    jwt.verify(token, secret, (err, decode) => {
-        if (err) throw new Error('Not valid token');
-        user = decode;
-    });
+        if (!token) throw new Error('No token');
+        let user = null;
 
-    return user;
+        jwt.verify(token, secret, (err, decode) => {
+            if (err) throw new Error('Not valid token');
+            user = decode;
+        });
+
+        return user;
+    },
+
+    password: token => {
+
+        if (!token) throw new Error('No token');
+        let user = null;
+
+        jwt.verify(token, passSecret, (err, decode) => {
+            if (err) throw new Error('Not valid token');
+            user = decode;
+        });
+
+        return user;
+    },
 };

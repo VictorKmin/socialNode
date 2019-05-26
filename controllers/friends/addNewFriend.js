@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
     try {
         const FriendModel = db.getModel('Friend');
         const token = req.get('Authorization');
-        const {id} = tokenVerificator(token);
+        const {id} = tokenVerificator.auth(token);
         const userToAdd = req.params.id;
         if (!userToAdd || userToAdd < 1) throw new Error('Bad user ID');
 

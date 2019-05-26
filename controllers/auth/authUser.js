@@ -1,5 +1,5 @@
 let db = require('../../dataBase').getInstance();
-let tokenizer = require('../../helpers/tokinazer');
+let tokenizer = require('../../helpers/tokinazer').auth;
 
 module.exports = async (req, res) => {
     try {

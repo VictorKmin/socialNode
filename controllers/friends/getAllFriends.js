@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
         const UserModel = db.getModel('User');
         const SexModel = db.getModel('Sex');
         const token = req.get('Authorization');
-        const {id} = tokenVerificator(token);
+        const {id} = tokenVerificator.auth(token);
         let {limit = 20, page = 1} = req.query;
         if (+page === 0) page = 1;
         page = page - 1;

@@ -1,4 +1,7 @@
 const jwt = require('jsonwebtoken');
-const {secret} = require('../constants/secret');
+const {secret, passSecret} = require('../constants/secret');
 
-module.exports = data => jwt.sign(data, secret, {expiresIn: '30d'});
+module.exports = {
+    auth: data => jwt.sign(data, secret, {expiresIn: '30d'}),
+    password: data => jwt.sign(data, passSecret, {expiresIn: '5m'})
+};
