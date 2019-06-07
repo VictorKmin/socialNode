@@ -1,12 +1,16 @@
 const app = require('../app');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const should = chai.should;
+const should = chai.should();
 
 chai.use(chaiHttp);
 
+const token =
+    `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6IkthcmlzaGEiLCJzZXhfaWQiOjIsImlhdCI6MTU1OTkyMTU5MCwiZXhwIjoxNTYyNTEzNTkwfQ.HbsayOdjQj5tKyneU9mj2E_MScpJ3vRNuAQzTnmsA14`
+
+
 /**
- * Test for get token on authorization
+ * Test for get token on login
  */
 
 describe('POST auth/user', () => {
@@ -34,57 +38,18 @@ describe('POST auth/user', () => {
             .post('/auth/user')
             .send(user)
             .end((err, res) => {
-                console.log(res);
-                // should(res).have.status(200);
-                res.status.should.equal(200);
+                res.should.have.status(200);
+
                 res.body.should.be.a('object');
                 res.body.should.have.property('msg');
                 res.body.msg.should.be.a('string');
+                res.body.should.have.property('success');
+                res.body.success.should.be.a('boolean').eqls(true);
                 // token validation by RegEx
-                res.body.message.should.have.property('msg')
+                res.body.msg.should
                     .match(/^[A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*$/);
                 done();
             });
     });
 });
 
-
-/**
- * Method to
- */
-
-
-describe('GET /user', () => {
-    // beforeEach(done => {
-    //     console.log(UserModel);
-    //     console.log(dataBase);
-    //     UserModel.create({
-    //         name: 'Vlad',
-    //         surname: 'Pipiu',
-    //         email: 'vlad@test.com',
-    //         password: 'test',
-    //         sex_id: 1
-    //     }, () => {
-    //         done();
-    //     });
-    // });
-
-    it('should return token', done => {
-        const user = {
-            email: 'vlad@test.com',
-            password: 'test'
-        };
-
-        chai.request(app)
-            .get('user/')
-            .send(user)
-            .end((err, res) => {
-                res.should.have.status(200);
-                res.body.should.be.a('object');
-                res.body.should.have.property('msg');
-                // res.body.message.should.have.property('token');
-                // res.body.message.should.have.property('accessToken').eql('Some value');
-                done();
-            });
-    });
-});
