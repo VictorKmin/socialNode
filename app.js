@@ -26,3 +26,6 @@ app.listen(3000, err => {
     if (err) console.log(err);
     console.log('Server listen on port 3000');
 });
+
+
+module.exports = app; // just for testing

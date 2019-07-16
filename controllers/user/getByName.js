@@ -12,6 +12,7 @@ const tokenVerificator = require('../../helpers/tokenVerificator');
  * @param res
  * @returns filtered - array of users which names includes name from query
  */
+
 module.exports = async (req, res) => {
     try {
         const UserModel = db.getModel('User');

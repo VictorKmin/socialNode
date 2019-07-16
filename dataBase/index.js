@@ -6,7 +6,7 @@ module.exports = (() => {
     let instance;
 
     function initConnection() {
-        const client = new Sequalize('social', 'user', 'user', {
+        const client = new Sequalize('social', 'root', 'groovy', {
             host: 'localhost',
             dialect: 'mysql'
         });
