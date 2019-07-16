@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -18,10 +19,12 @@
   "homepage": "https://github.com/VictorKmin/socialNode#readme",
   "description": "",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^1.6.5",
     "nodemailer": "^6.2.1",
-    "sequelize": "latest"
+    "sequelize": "latest",
+    "lodash": "latest"
   }
 }

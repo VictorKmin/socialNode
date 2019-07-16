@@ -1,18 +1,3 @@
-// let mysql = require('mysql2');
-//
-// const pool = mysql.createPool({
-//     host: 'localhost',
-//     user: 'user',
-//     password: 'user',
-//     database: 'social',
-//     waitForConnections: true,
-//     connectionLimit: 10,
-//     queueLimit: 0
-// });
-//
-// module.exports = pool;
-
-
 const Sequalize = require('sequelize');
 const fs = require('fs');
 const {resolve} = require('path');

@@ -1,12 +1,10 @@
 const db = require('../../dataBase').getInstance();
 const sendEmail = require('../../helpers/sendEmailChangePassword');
-const tokenVerificator = require('../../helpers/tokenVerificator').auth;
+
 module.exports = async (req, res) => {
     try {
         const UserModel = db.getModel('User');
-        const token = req.get('Authorization');
-        const {id, name} = tokenVerificator(token);
-
+        const {id, name} = req.user;
         const isPresent = await UserModel.findOne({
             where: {
                 id, name
@@ -14,16 +12,17 @@ module.exports = async (req, res) => {
         });
         if (!isPresent) throw new Error('User is not present');
 
-       const info = await sendEmail(id);
+        const info = await sendEmail(id);
 
         res.json({
             success: true,
             msg: info
         })
     } catch (e) {
-        res.status(400).json({
-            success: false,
-            msg: e.message
-        })
+        res.status(e.status || 500)
+            .json({
+                success: false,
+                msg: e.parent.sqlMessage || e.message
+            })
     }
 };

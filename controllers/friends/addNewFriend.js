@@ -1,12 +1,10 @@
-const tokenVerificator = require('../../helpers/tokenVerificator');
 const Op = require('sequelize').Op;
 const db = require('../../dataBase').getInstance();
 
 module.exports = async (req, res) => {
     try {
         const FriendModel = db.getModel('Friend');
-        const token = req.get('Authorization');
-        const {id} = tokenVerificator.auth(token);
+        const {id} = req.user;
         const userToAdd = req.params.id;
         if (!userToAdd || userToAdd < 1) throw new Error('Bad user ID');
 
@@ -37,9 +35,10 @@ module.exports = async (req, res) => {
             msg: 'OK'
         })
     } catch (e) {
-        res.status(400).json({
-            success: false,
-            msg: e.message
-        })
+        res.status(e.status || 500)
+            .json({
+                success: false,
+                msg: e.parent.sqlMessage || e.message
+            })
     }
 };

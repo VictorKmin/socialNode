@@ -1,6 +1,5 @@
 const Op = require('sequelize').Op;
 const Sequelize = require('sequelize');
-const tokenVerificator = require('../../helpers/tokenVerificator');
 const db = require('../../dataBase').getInstance();
 
 module.exports = async (req, res) => {
@@ -9,8 +8,7 @@ module.exports = async (req, res) => {
         const FriendModel = db.getModel('Friend');
         const UserModel = db.getModel('User');
         const SexModel = db.getModel('Sex');
-        const token = req.get('Authorization');
-        const {id} = tokenVerificator.auth(token);
+        const {id} = req.user;
         let {limit = 20, page = 1} = req.query;
         if (+page === 0) page = 1;
         page = page - 1;
@@ -44,7 +42,7 @@ module.exports = async (req, res) => {
             include: [
                 {
                     model: UserModel,
-                    attributes: ['name', 'surname'],
+                    attributes: ['name', 'surname', 'id'],
                     include: [{
                         model: SexModel,
                         attributes: ['label']
@@ -64,9 +62,10 @@ module.exports = async (req, res) => {
             msg: responseObj
         })
     } catch (e) {
-        res.status(400).json({
-            success: false,
-            msg: e.message
-        })
+        res.status(e.status || 500)
+            .json({
+                success: false,
+                msg: e.parent.sqlMessage || e.message
+            })
     }
 };

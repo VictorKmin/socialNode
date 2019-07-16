@@ -1,8 +1,9 @@
 const router = require('express').Router();
+const checkToken = require('../middlewares/checkToken');
 
-let authUser = require('../controllers/auth/authUser');
-let changePassword = require('../controllers/auth/changePassword');
-let sendChangeEmail = require('../controllers/auth/sendChangeEmail');
+const authUser = require('../controllers/auth/authUser');
+const changePassword = require('../controllers/auth/changePassword');
+const sendChangeEmail = require('../controllers/auth/sendChangeEmail');
 
 router.post('/user', authUser);
 router.get('/user/password', sendChangeEmail);

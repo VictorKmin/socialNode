@@ -1,11 +1,12 @@
 let db = require('../../dataBase').getInstance();
 let tokenizer = require('../../helpers/tokinazer').auth;
+const ControllerError = require('../../error/ControllerError');
 
 module.exports = async (req, res) => {
     try {
         const UserModel = db.getModel('User');
         const {email = '', password = ''} = req.body;
-        if (!email || !password) throw new Error('Some field is empty');
+        if (!email || !password) throw new ControllerError('Some field is empty', 400);
 
         const isPresent = await UserModel.findOne({
             where: {
@@ -13,7 +14,7 @@ module.exports = async (req, res) => {
                 password
             }
         });
-        if (!isPresent) throw new Error('You are not register');
+        if (!isPresent) throw new ControllerError('You are not register', 400);
 
         const {id, name, sex_id} = isPresent;
 
@@ -23,10 +24,10 @@ module.exports = async (req, res) => {
             msg: token
         })
     } catch (e) {
-        console.log(e);
-        res.status(400).json({
-            success: false,
-            msg: e.message
-        })
+        res.status(e.status || 500)
+            .json({
+                success: false,
+                msg: e.parent.sqlMessage || e.message
+            })
     }
 };

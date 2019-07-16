@@ -1,7 +1,7 @@
 const {email, password} = require('../constants/mailCredential');
 const mailer = require('nodemailer');
 const passTokenGenerator = require('../helpers/tokinazer').password;
-module.exports = async user => {
+module.exports = async (user, method) => {
 
     const transport = mailer.createTransport({
         service: 'gmail',
@@ -15,7 +15,7 @@ module.exports = async user => {
         from: email,
         to: 'victor.fzs10@gmail.com',
         subject: 'Password change on perfect social network',
-        html:  buildTemplate(user)
+        html: buildTemplate(user)
     });
     return info.response;
 };

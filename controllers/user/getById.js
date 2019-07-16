@@ -1,10 +1,15 @@
-const db = require('../../dataBase');
+const db = require('../../dataBase').getInstance();
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
     try {
-        // const userId = req.params.id;
-        // const user = db.find(user => user.id == userId);
-        // if (!user) throw new Error('User is not found');
+        const UserModel = db.getModel('User');
+        const SexModel = db.getModel('Sex');
+        const {id} = req.params;
+        await UserModel.findByPk(id, {
+            attributes: ['id', 'name', 'surname', 'email'],
+            include: [SexModel]
+        });
+        if (!user) throw new Error('User is not found');
         res.json({
             success: true,
             msg: 'OK'
