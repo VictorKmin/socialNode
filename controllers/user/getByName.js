@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
         // if name is not present - find all users
         if (!name) {
             const allUsers = await UserModel.findAll({
-                attributes: ["name", "surname", "sex_id"],
+                attributes: ["name", "surname", "sex_id", 'id'],
                 include: [SexModel]
             });
             return res.json({
@@ -45,7 +45,7 @@ module.exports = async (req, res) => {
         }
 
         const allUsers = await UserModel.findAll({
-            attributes: ["name", "surname", "sex_id"],
+            attributes: ["name", "surname", "sex_id", 'id'],
             where: {
                 [Op.or]: [
                     {
