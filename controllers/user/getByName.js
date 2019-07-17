@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
 
         const token = req.get('Authorization');
 
-        const {id, name: userName} = tokenVerificator.auth(token);
+        const {id, name: userName} = tokenVerificator(token, 'auth');
 
         const isPresent = await UserModel.findOne({
             where: {
