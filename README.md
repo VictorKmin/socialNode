@@ -41,6 +41,19 @@ create table if not exists friend
             on update cascade on delete cascade
 );
 
+create table if not exists photo
+(
+    id      int auto_increment
+        primary key,
+    user_id int          null,
+    path    varchar(255) not null,
+    constraint photo_user_id_fk
+        foreign key (user_id) references user (id)
+            on delete set null
+);
+
+
+
 
 
 INSERT INTO sex(label) VALUE ('Male');
