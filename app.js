@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-
+const path = require('path');
 const cors = require('cors');
 app.use(cors());
 
@@ -9,6 +9,7 @@ dataBase.setModels();
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(express.static(path.join(__dirname, 'public')));
 
 const userRouter = require('./routes/userRouter');
 const authRouter = require('./routes/authRouter');
@@ -19,7 +20,7 @@ app.use('/auth', authRouter);
 app.use('/friend', friendRouter);
 
 app.use('*', (req, res) => {
-    res.status(404).json('Oops')
+    res.status(404).json('Page not found')
 });
 
 app.listen(3000, err => {

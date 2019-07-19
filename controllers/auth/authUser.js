@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
         res.status(e.status || 500)
             .json({
                 success: false,
-                msg: e.parent.sqlMessage || e.message
+                msg: e.message
             })
     }
 };
