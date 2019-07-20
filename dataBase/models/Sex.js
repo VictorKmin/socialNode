@@ -2,7 +2,8 @@ module.exports = (sequelize, DataTypes) => {
     const Sex = sequelize.define('Sex', {
         id: {
             type: DataTypes.INTEGER,
-            primaryKey: true
+            primaryKey: true,
+            autoIncrement:true
         },
         label: {
             type: DataTypes.STRING
