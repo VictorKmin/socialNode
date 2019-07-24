@@ -1,11 +1,12 @@
 const jwt = require('jsonwebtoken');
-let {secret, passSecret} = require('../constants/secret');
+let {secret, passSecret, refreshSecret} = require('../constants/secret');
 
 module.exports = (token, method) => {
     let secretWord = '';
 
     if (method === 'auth') secretWord = secret;
     if (method === 'confirm') secretWord = passSecret;
+    if (method === 'refresh') secretWord = refreshSecret;
 
     if (!token) throw new Error('No token');
     let user = null;

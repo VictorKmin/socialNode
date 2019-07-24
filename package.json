@@ -19,14 +19,15 @@
   "homepage": "https://github.com/VictorKmin/socialNode#readme",
   "description": "",
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "express-fileupload": "^1.1.5",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "latest",
     "mysql2": "^1.6.5",
     "nodemailer": "^6.2.1",
     "sequelize": "latest",
-    "lodash": "latest",
-    "multer": "latest",
     "uuid": "latest"
   },
   "devDependencies": {

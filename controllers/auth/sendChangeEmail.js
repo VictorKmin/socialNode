@@ -1,7 +1,8 @@
 const db = require('../../dataBase').getInstance();
 const sendEmail = require('../../helpers/sendEmailChangePassword');
+const ControllerError = require('../../error/ControllerError');
 
-module.exports = async (req, res) => {
+module.exports = async (req, res, next) => {
     try {
         const UserModel = db.getModel('User');
         const {id, name} = req.user;
@@ -19,10 +20,6 @@ module.exports = async (req, res) => {
             msg: info
         })
     } catch (e) {
-        res.status(e.status || 500)
-            .json({
-                success: false,
-                msg: e.parent.sqlMessage || e.message
-            })
+        next(new ControllerError(e.message, e.status, 'sendChangeEmail'))
     }
 };

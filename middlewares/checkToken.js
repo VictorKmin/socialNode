@@ -6,17 +6,16 @@ module.exports = (req, res, next) => {
         const authToken = req.get('Authorization');
         const confirmToken = req.query.t;
 
-        if (authToken) req.user = tokenVerificator(authToken, 'auth');
-        if (confirmToken) req.user = tokenVerificator(confirmToken, 'confirm');
+        let user = {};
 
-        if (!req.user) throw new ControllerError('No token', 401);
+        if (authToken) user = tokenVerificator(authToken, 'auth');
+        if (confirmToken) user = tokenVerificator(confirmToken, 'confirm');
 
+        if (!user) throw new ControllerError('No token', 401, 'checkToken');
+
+        req.user = user;
         next();
     } catch (e) {
-        res.status(e.status || 500)
-            .json({
-                success: false,
-                msg: e.parent.sqlMessage || e.message
-            })
+        next(new ControllerError(e.message, e.status, 'checkToken'))
     }
 };
