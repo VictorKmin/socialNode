@@ -1,6 +1,7 @@
 const Op = require('sequelize').Op;
 const db = require('../../dataBase').getInstance();
 const tokenVerificator = require('../../helpers/tokenVerificator');
+const action = require('../../constants/actions');
 /**
  * This method using for search user by name
  * Firstly we get name from query object
@@ -22,7 +23,7 @@ module.exports = async (req, res) => {
 
         const token = req.get('Authorization');
 
-        const {id, name: userName} = tokenVerificator(token, 'auth');
+        const {id, name: userName} = tokenVerificator(token, action.AUTH);
 
         const isPresent = await UserModel.findOne({
             where: {

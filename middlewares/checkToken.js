@@ -1,5 +1,6 @@
 const ControllerError = require('../error/ControllerError');
 const tokenVerificator = require('../helpers/tokenVerificator');
+const action = require('../constants/actions');
 
 module.exports = (req, res, next) => {
     try {
@@ -8,8 +9,8 @@ module.exports = (req, res, next) => {
 
         let user = {};
 
-        if (authToken) user = tokenVerificator(authToken, 'auth');
-        if (confirmToken) user = tokenVerificator(confirmToken, 'confirm');
+        if (authToken) user = tokenVerificator(authToken, action.AUTH);
+        if (confirmToken) user = tokenVerificator(confirmToken, action.CONFIRM);
 
         if (!user) throw new ControllerError('No token', 401, 'checkToken');
 
