@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const path = require('path');
+const {resolve: resolvePath} = require('path');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
 
@@ -9,9 +9,11 @@ dataBase.setModels();
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(resolvePath(__dirname, 'public')));
 app.use(cors());
 app.use(fileUpload());
+
+global.appRoot = __dirname;
 
 const userRouter = require('./routes/userRouter');
 const authRouter = require('./routes/authRouter');
@@ -28,14 +30,12 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-    let e;
-    const isSql = err.parent;
-    if (isSql) e = err.parent.sqlMessage;
     res
         .status(err.status || 500)
         .json({
             success: false,
-            message: e || err.message || 'Unknown Error'
+            message: err.message || 'Unknown Error',
+            controller: err.controller
         })
 });
 

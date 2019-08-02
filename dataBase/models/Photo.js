@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
         path: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false
         }
     }, {
         tableName: 'photo',
