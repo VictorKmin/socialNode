@@ -17,9 +17,25 @@ module.exports = (sequelize, DataTypes) => {
         password: {
             type: DataTypes.STRING
         },
+        city: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
+        birthday: {
+            type: DataTypes.DATE,
+            allowNull: true
+        },
         sex_id: {
             type: DataTypes.INTEGER,
             foreignKey: true
+        },
+        photo: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
+        created_at: {
+            type: DataTypes.DATE,
+            defaultValue: sequelize.fn('now')
         }
     }, {
         tableName: 'user',
