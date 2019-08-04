@@ -9,10 +9,12 @@ module.exports = (req, res, next) => {
 
         let user = {};
 
+        if (!authToken && !confirmToken) {
+            throw new ControllerError('No token', 401, 'checkToken');
+        }
+
         if (authToken) user = tokenVerificator(authToken, action.AUTH);
         if (confirmToken) user = tokenVerificator(confirmToken, action.CONFIRM);
-
-        if (!user) throw new ControllerError('No token', 401, 'checkToken');
 
         req.user = user;
         next();

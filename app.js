@@ -3,6 +3,7 @@ const app = express();
 const {resolve: resolvePath} = require('path');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
+const chalk = require('chalk'); // development
 
 const dataBase = require('./dataBase').getInstance();
 dataBase.setModels();
@@ -42,6 +43,23 @@ app.use((err, req, res, next) => {
 app.listen(3000, err => {
     if (err) console.log(err);
     console.log('Server listen on port 3000');
+    console.log(chalk.magenta(`                                                                                                         
+   SSSSSSSSSSSSSSS      OOOOOOOOO             CCCCCCCCCCCCCIIIIIIIIII               AAA               LLLLLLLLLLL             
+ SS:::::::::::::::S   OO:::::::::OO        CCC::::::::::::CI::::::::I              A:::A              L:::::::::L             
+S:::::SSSSSS::::::S OO:::::::::::::OO    CC:::::::::::::::CI::::::::I             A:::::A             L:::::::::L             
+S:::::S     SSSSSSSO:::::::OOO:::::::O  C:::::CCCCCCCC::::CII::::::II            A:::::::A            LL:::::::LL             
+S:::::S            O::::::O   O::::::O C:::::C       CCCCCC  I::::I             A:::::::::A             L:::::L               
+S:::::S            O:::::O     O:::::OC:::::C                I::::I            A:::::A:::::A            L:::::L               
+ S::::SSSS         O:::::O     O:::::OC:::::C                I::::I           A:::::A A:::::A           L:::::L               
+  SS::::::SSSSS    O:::::O     O:::::OC:::::C                I::::I          A:::::A   A:::::A          L:::::L               
+    SSS::::::::SS  O:::::O     O:::::OC:::::C                I::::I         A:::::A     A:::::A         L:::::L               
+       SSSSSS::::S O:::::O     O:::::OC:::::C                I::::I        A:::::AAAAAAAAA:::::A        L:::::L               
+            S:::::SO:::::O     O:::::OC:::::C                I::::I       A:::::::::::::::::::::A       L:::::L               
+            S:::::SO::::::O   O::::::O C:::::C       CCCCCC  I::::I      A:::::AAAAAAAAAAAAA:::::A      L:::::L         LLLLLL
+SSSSSSS     S:::::SO:::::::OOO:::::::O  C:::::CCCCCCCC::::CII::::::II   A:::::A             A:::::A   LL:::::::LLLLLLLLL:::::L
+S::::::SSSSSS:::::S OO:::::::::::::OO    CC:::::::::::::::CI::::::::I  A:::::A               A:::::A  L::::::::::::::::::::::L
+S:::::::::::::::SS    OO:::::::::OO        CCC::::::::::::CI::::::::I A:::::A                 A:::::A L::::::::::::::::::::::L
+ SSSSSSSSSSSSSSS        OOOOOOOOO             CCCCCCCCCCCCCIIIIIIIIIIAAAAAAA                   AAAAAAALLLLLLLLLLLLLLLLLLLLLLLL`));
 });
 
 
