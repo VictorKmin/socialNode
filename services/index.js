@@ -1,3 +1,2 @@
-const userService = require('./user.service');
-
-module.exports.userService = userService;
+module.exports.userService = require('./user.service');
+module.exports.oauthService = require('./auth-token.service');

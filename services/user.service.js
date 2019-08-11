@@ -46,6 +46,11 @@ class UserService {
             throw new ControllerError(e.parent.sqlMessage, 500, 'userService/filter')
         }
     }
+
+    getUserByParams(userObj) {
+        const UserModel = db.getModel('User');
+        return UserModel.findAll({where: userObj})
+    }
 }
 
 module.exports = new UserService();

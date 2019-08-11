@@ -1,30 +1,41 @@
-let db = require('../../dataBase').getInstance();
-let tokenizer = require('../../helpers/tokinazer').auth;
+const tokenizer = require('../../helpers/tokinazer').auth;
+const {userService, oauthService} = require('../../services');
 const ControllerError = require('../../error/ControllerError');
 const {chechHashPassword} = require('../../helpers/passwordHasher');
 
 module.exports = async (req, res, next) => {
     try {
-        const UserModel = db.getModel('User');
-        const {email = '', password = ''} = req.body;
-        if (!email || !password) throw new ControllerError('Some field is empty', 400);
+        const {email = null, password = null} = req.body;
 
-        const isPresent = await UserModel.findOne({
-            where: {email}
-        });
+        const [isPresent] = await userService.getUserByParams({email});
+
         if (!isPresent) throw new ControllerError('You are not register', 400);
 
-        const {id, name, sex_id, password: hashPassword} = isPresent;
+        const {id, password: hashPassword} = isPresent.dataValues;
 
         const isPassOK = await chechHashPassword(password, hashPassword);
         if (!isPassOK) throw new Error('Password is wrong');
 
-        const token = tokenizer({id, name, sex_id});
+        const isUserLogged = await oauthService.getTokenByParams({user_id: id});
+
+        if (isUserLogged) {
+            console.log(`Send email to ${email}`)
+        }
+
+        const tokens = tokenizer();
+
+        await oauthService.createTokens({
+            access_token: tokens.accessToken,
+            refresh_token: tokens.refreshToken,
+            user_id: id
+        });
+
         res.json({
             success: true,
-            msg: token
+            msg: tokens
         })
     } catch (e) {
+        console.log(e);
         next(new ControllerError(e.message, e.status, 'auth/authUser'))
     }
 };

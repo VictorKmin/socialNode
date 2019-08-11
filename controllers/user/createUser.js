@@ -1,53 +1,58 @@
 const {resolve: resolvePath} = require('path');
+const Joi = require('joi');
+
 const db = require('../../dataBase').getInstance();
 const {hashPassword} = require('../../helpers/passwordHasher');
 const ControllerError = require('../../error/ControllerError');
 const fileChecker = require('../../helpers/fileChecker');
 const {USERS} = require('../../constants/fileDirEnum');
 const {userService} = require('../../services');
+const {userValidator} = require('../../validators');
 
 module.exports = async (req, res, next) => {
     try {
         const PhotoModel = db.getModel('Photo');
-        let {
-            name,
-            surname,
-            password,
-            email,
-            sex = 3,
-            city = null,
-            birthday = null
-        } = req.body;
+        const userObj = req.body;
 
-        if (!name || !surname || !password || !email) throw new Error('Some field is empty');
+        if (!userObj.sex_id) userObj.sex_id = 3;
 
-        const hashedPass = await hashPassword(password);
-        let insertedUser = await userService.createUser({
-            name,
-            surname,
-            email,
-            password: hashedPass,
-            sex_id: sex,
-            city,
-            birthday
-        });
+        const isUserValid = Joi.validate(userObj, userValidator);
+
+        if (isUserValid.error) {
+            throw new ControllerError(isUserValid.error.details[0].message, 400, 'user/createUser');
+        }
+
+        userObj.password = await hashPassword(userObj.password);
+        userObj.created_at = new Date().toISOString();
+
+        const isUserPresent = await userService.getUserByParams({email: userObj.email});
+
+        if (isUserPresent.length) {
+            throw new ControllerError('User already registered', 400)
+        }
+
+        let insertedUser = await userService.createUser(userObj);
         const {id} = insertedUser.dataValues;
 
         if (req.files) {
             const {photo} = req.files;
+
             if (photo) {
                 const {photo: goodPhoto} = await fileChecker(req.files, id, USERS);
                 goodPhoto.mv(resolvePath(`${appRoot}/public/${goodPhoto.path}`));
+
                 await PhotoModel.create({
                     user_id: id,
                     path: goodPhoto.path,
                     name: goodPhoto.name
                 });
+
                 insertedUser = await userService.updateUser({photo: goodPhoto.path}, id)
             }
         }
 
         delete insertedUser.dataValues.password;
+
         res.json({
             success: true,
             msg: insertedUser
