@@ -16,13 +16,11 @@ app.use(fileUpload());
 
 global.appRoot = __dirname;
 
-const userRouter = require('./routes/userRouter');
-const authRouter = require('./routes/authRouter');
-const friendRouter = require('./routes/friendRouter');
+const {userRouter, authRouter, friendRouter} = require('./routes');
 
-app.use('/user', userRouter);
+app.use('/users', userRouter);
+app.use('/friends', friendRouter);
 app.use('/auth', authRouter);
-app.use('/friend', friendRouter);
 
 app.use((req, res, next) => {
     const err = new Error('Page not found');

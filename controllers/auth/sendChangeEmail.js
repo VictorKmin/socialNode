@@ -1,5 +1,5 @@
 const db = require('../../dataBase').getInstance();
-const sendEmail = require('../../helpers/sendEmailChangePassword');
+const {sendEmailChangePassword} = require('../../helpers');
 const ControllerError = require('../../error/ControllerError');
 
 module.exports = async (req, res, next) => {
@@ -13,7 +13,7 @@ module.exports = async (req, res, next) => {
         });
         if (!isPresent) throw new Error('User is not present');
 
-        const info = await sendEmail(id);
+        const info = await sendEmailChangePassword(id);
 
         res.json({
             success: true,

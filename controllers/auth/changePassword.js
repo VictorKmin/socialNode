@@ -1,4 +1,5 @@
 const db = require('../../dataBase').getInstance();
+
 module.exports = async (req, res) => {
     try {
         // мб на фронті зробити віддільнуурлу під то

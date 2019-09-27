@@ -1,7 +1,6 @@
 const ControllerError = require('../../error/ControllerError');
-const tokenVerificator = require('../../helpers/tokenVerificator');
-const action = require('../../constants/actions');
-const tokinazer = require('../../helpers/tokinazer').auth;
+const {tokenVerificator, tokinazer} = require('../../helpers');
+const {action} = require('../../constants');
 const {oauthService, userService} = require('../../services');
 
 module.exports = async (req, res, next) => {
@@ -24,7 +23,7 @@ module.exports = async (req, res, next) => {
         }
         await oauthService.deleteTokenByParams({user_id, refresh_token: token});
 
-        const tokens = tokinazer();
+        const tokens = tokinazer.auth();
 
         await oauthService.createTokens({
             access_token: tokens.accessToken,

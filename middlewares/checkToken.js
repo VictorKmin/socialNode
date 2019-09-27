@@ -1,6 +1,6 @@
 const ControllerError = require('../error/ControllerError');
 const tokenVerificator = require('../helpers/tokenVerificator');
-const action = require('../constants/actions');
+const {action} = require('../constants');
 
 module.exports = (req, res, next) => {
     try {

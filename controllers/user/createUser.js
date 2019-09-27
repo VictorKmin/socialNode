@@ -2,10 +2,9 @@ const {resolve: resolvePath} = require('path');
 const Joi = require('joi');
 
 const db = require('../../dataBase').getInstance();
-const {hashPassword} = require('../../helpers/passwordHasher');
 const ControllerError = require('../../error/ControllerError');
-const fileChecker = require('../../helpers/fileChecker');
-const {USERS} = require('../../constants/fileDirEnum');
+const {fileChecker, passwordHasher} = require('../../helpers');
+const {fileDirEnum} = require('../../constants');
 const {userService} = require('../../services');
 const {userValidator} = require('../../validators');
 
@@ -22,7 +21,7 @@ module.exports = async (req, res, next) => {
             throw new ControllerError(isUserValid.error.details[0].message, 400, 'user/createUser');
         }
 
-        userObj.password = await hashPassword(userObj.password);
+        userObj.password = await passwordHasher.hashPassword(userObj.password);
         userObj.created_at = new Date().toISOString();
 
         const isUserPresent = await userService.getUserByParams({email: userObj.email});
@@ -38,7 +37,7 @@ module.exports = async (req, res, next) => {
             const {photo} = req.files;
 
             if (photo) {
-                const {photo: goodPhoto} = await fileChecker(req.files, id, USERS);
+                const {photo: goodPhoto} = await fileChecker(req.files, id, fileDirEnum.USERS);
                 goodPhoto.mv(resolvePath(`${appRoot}/public/${goodPhoto.path}`));
 
                 await PhotoModel.create({

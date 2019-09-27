@@ -1,7 +1,6 @@
-const tokenizer = require('../../helpers/tokinazer').auth;
 const {userService, oauthService} = require('../../services');
 const ControllerError = require('../../error/ControllerError');
-const {chechHashPassword} = require('../../helpers/passwordHasher');
+const {passwordHasher, tokinazer} = require('../../helpers');
 
 module.exports = async (req, res, next) => {
     try {
@@ -13,7 +12,7 @@ module.exports = async (req, res, next) => {
 
         const {id, password: hashPassword} = isPresent.dataValues;
 
-        const isPassOK = await chechHashPassword(password, hashPassword);
+        const isPassOK = await passwordHasher.chechHashPassword(password, hashPassword);
         if (!isPassOK) throw new Error('Password is wrong');
 
         const isUserLogged = await oauthService.getTokenByParams({user_id: id});
@@ -22,7 +21,7 @@ module.exports = async (req, res, next) => {
             console.log(`Send email to ${email}`)
         }
 
-        const tokens = tokenizer();
+        const tokens = tokinazer.auth();
 
         await oauthService.createTokens({
             access_token: tokens.accessToken,

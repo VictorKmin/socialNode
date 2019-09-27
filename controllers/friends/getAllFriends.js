@@ -1,5 +1,6 @@
-const Op = require('sequelize').Op;
+const {Op} = require('sequelize');
 const Sequelize = require('sequelize');
+
 const db = require('../../dataBase').getInstance();
 
 module.exports = async (req, res) => {
@@ -8,6 +9,7 @@ module.exports = async (req, res) => {
         const FriendModel = db.getModel('Friend');
         const UserModel = db.getModel('User');
         const SexModel = db.getModel('Sex');
+
         const {id} = req.user;
         let {limit = 20, page = 1} = req.query;
         if (+page === 0) page = 1;

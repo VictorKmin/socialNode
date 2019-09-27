@@ -1,15 +1,10 @@
 const router = require('express').Router();
 
 const checkToken = require('../middlewares/checkToken');
+const {friendsController} = require('../controllers');
 
-const addNewFriend = require('../controllers/friends/addNewFriend');
-const deleteFriend = require('../controllers/friends/deleteFriend');
-const getAllFriends = require('../controllers/friends/getAllFriends');
-
-
-router.post('/:id', checkToken, addNewFriend);
-router.delete('/:id', checkToken, deleteFriend);
-router.get('/', checkToken, getAllFriends);
-
+router.post('/:id', checkToken, friendsController.addNewFriend);
+router.delete('/:id', checkToken, friendsController.deleteFriend);
+router.get('/', checkToken, friendsController.getAllFriends);
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const Op = require('sequelize').Op;
+
 const db = require('../../dataBase').getInstance();
 
 module.exports = async (req, res) => {

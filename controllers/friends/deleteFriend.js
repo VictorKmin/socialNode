@@ -1,5 +1,7 @@
-const Op = require('sequelize').Op;
+const {Op} = require('sequelize');
+
 const db = require('../../dataBase').getInstance();
+
 module.exports = async (req, res) => {
     try {
         const FriendModel = db.getModel('Friend');
