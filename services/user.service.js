@@ -1,6 +1,6 @@
 const db = require('../dataBase').getInstance();
 const ControllerError = require('../error/ControllerError');
-const queryBuilder = require('../helpers/queryBuilder');
+const {queryBuilder} = require('../helpers');
 
 class UserService {
     createUser(userObj) {

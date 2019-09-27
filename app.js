@@ -6,6 +6,7 @@ const fileUpload = require('express-fileupload');
 const chalk = require('chalk'); // development
 
 const dataBase = require('./dataBase').getInstance();
+
 dataBase.setModels();
 
 app.use(express.json());

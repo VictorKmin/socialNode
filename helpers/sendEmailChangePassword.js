@@ -1,7 +1,7 @@
 const mailer = require('nodemailer');
 
 const {mailCredential} = require('../constants');
-const passTokenGenerator = require('../helpers/tokinazer').password;
+const {tokinazer} = require('../helpers');
 
 module.exports = async (user, method) => {
 
@@ -23,7 +23,7 @@ module.exports = async (user, method) => {
 };
 
 function buildTemplate(user) {
-    let token = passTokenGenerator({user});
+    let token = tokinazer.password({user});
     const html =
         `<h1> Password change </h1>
          <br>
