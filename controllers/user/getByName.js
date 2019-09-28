@@ -52,12 +52,12 @@ module.exports = async (req, res) => {
                 [Op.or]: [
                     {
                         name: {
-                            [Op.like]: `%${name}%`
+                            [Op.like]: `${name}%`
                         }
                     },
                     {
                         surname: {
-                            [Op.like]: `%${name}%`
+                            [Op.like]: `${name}%`
                         }
                     }]
             },

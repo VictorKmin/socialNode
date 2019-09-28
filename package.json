@@ -4,7 +4,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "create:db": "node_modules/.bin/sequelize db:create",
+    "migrate:down": "npx sequelize-cli db:migrate:undo",
+    "migrate:up": "npx sequelize-cli db:migrate",
+    "first": "node_modules/.bin/sequelize db:create && npx sequelize-cli db:migrate"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +21,7 @@
     "url": "https://github.com/VictorKmin/socialNode/issues"
   },
   "homepage": "https://github.com/VictorKmin/socialNode#readme",
-  "description": "",
+  "description": "social",
   "dependencies": {
     "bcrypt": "^3.0.6",
     "cors": "^2.8.5",
@@ -35,6 +39,11 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "chalk": "^2.4.2"
+    "chalk": "^2.4.2",
+    "sequelize-cli": "^5.5.1",
+    "@types/joi": "^14.3.3",
+    "@types/fs-extra": "^8.0.0",
+    "@types/express-fileupload": "^1.1.0",
+    "@types/sequelize": "^4.28.5"
   }
 }
