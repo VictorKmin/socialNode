@@ -14,9 +14,11 @@ module.exports = async (files, id, type) => {
         }
 
         const {name, mimetype, size} = photo;
+
         if (!mimeTypes.PHOTOS.includes(mimetype)) {
             throw new Error('Photo must have correct mime-type')
         }
+
         if (size > 5 * 1024 * 1024 || size < 512) {
             throw new Error('Size must be less then 5mb')
         }

@@ -10,6 +10,7 @@ module.exports = (token, method) => {
     if (method === action.REFRESH_TOKEN) secretWord = secret.refreshSecret;
 
     if (!token) throw new Error('No token');
+
     let user = null;
 
     jwt.verify(token, secretWord, (err, decode) => {
