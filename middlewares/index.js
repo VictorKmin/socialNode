@@ -1,1 +1,2 @@
-module.exports.checkToken = require('./checkToken')
+module.exports.checkTokenMiddleware = require('./checkToken');
+module.exports.isUserExistMiddleware = require('./isUserExistMiddleware');

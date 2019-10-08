@@ -1,16 +1,11 @@
-const {userService, oauthService} = require('../../services');
+const {oauthService} = require('../../services');
 const ControllerError = require('../../error/ControllerError');
 const {passwordHasher, tokinazer} = require('../../helpers');
 
 module.exports = async (req, res, next) => {
     try {
-        const {email = null, password = null} = req.body;
-
-        const [isPresent] = await userService.getUserByParams({email});
-
-        if (!isPresent) throw new ControllerError('You are not register', 400);
-
-        const {id, password: hashPassword} = isPresent.dataValues;
+        const {email = null, password: hashPassword, id} = req.user.dataValues;
+        const { password } = req.body
 
         const isPassOK = await passwordHasher.chechHashPassword(password, hashPassword);
         if (!isPassOK) throw new Error('Password is wrong');
